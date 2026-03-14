@@ -1,200 +1,272 @@
-# employee-predicition-
 # Employee Attrition Prediction System
 
-An end-to-end machine learning project that predicts whether an employee is likely to leave the company and highlights the main factors behind attrition.
+An end-to-end Machine Learning and HR Analytics project that predicts whether an employee is likely to leave the company and identifies the key factors driving attrition.
 
-This project uses the public Kaggle dataset: [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+This project combines **data preprocessing, exploratory data analysis, feature engineering, machine learning modeling, explainability, and interactive prediction tools** to help HR teams understand and mitigate employee turnover.
 
-## Overview
+Dataset used:
+IBM HR Analytics Employee Attrition & Performance
+https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset
 
-Employee attrition is a major business problem because it affects hiring cost, productivity, delivery continuity, and team morale. This project builds a complete HR analytics pipeline to:
+---
 
-- predict attrition as a binary classification problem
-- compare multiple machine learning models
-- identify the strongest attrition drivers
-- generate visual business insights for decision-making
+# Project Overview
 
-## Dataset
+Employee attrition is a major challenge for organizations because it impacts:
 
-The dataset contains employee-level HR records with `Attrition` as the target variable.
+* recruitment costs
+* productivity
+* project continuity
+* team morale
+* knowledge retention
 
-### Target
+This project builds a complete **HR analytics pipeline** that:
 
-- `Attrition`: `Yes` or `No`
+* predicts employee attrition as a binary classification problem
+* compares multiple machine learning models
+* identifies the strongest drivers of attrition
+* generates visual insights for business decision-making
+* provides an interactive prediction tool for scenario analysis
 
-### Important feature groups
+---
 
-- Demographics: `Age`, `Gender`, `MaritalStatus`, `Education`, `EducationField`
-- Compensation: `MonthlyIncome`, `DailyRate`, `HourlyRate`, `PercentSalaryHike`, `StockOptionLevel`
-- Job and work environment: `Department`, `JobRole`, `JobLevel`, `BusinessTravel`, `OverTime`, `WorkLifeBalance`, `EnvironmentSatisfaction`, `JobSatisfaction`
-- Experience and tenure: `TotalWorkingYears`, `YearsAtCompany`, `YearsInCurrentRole`, `YearsWithCurrManager`, `YearsSinceLastPromotion`, `NumCompaniesWorked`
-- Performance and engagement: `PerformanceRating`, `JobInvolvement`, `RelationshipSatisfaction`
+# Dataset
 
-## Project workflow
+The dataset contains **1470 employee records** with multiple HR attributes.
 
-### 1. Data preprocessing
+Target variable:
 
-- removes duplicates
-- drops identifier and constant columns
-- handles missing values using `SimpleImputer`
-- encodes categorical variables using `OneHotEncoder`
-- scales numerical features using `StandardScaler`
+Attrition
+Values: Yes / No
 
-### 2. Exploratory Data Analysis
+After preprocessing and feature engineering, the dataset contains approximately **31 usable features**.
 
-The project generates:
+---
 
-- attrition distribution plots
-- numeric feature distributions
-- attrition rate by overtime, work environment, job satisfaction, and business travel
-- correlation heatmap
+# Feature Categories
 
-### 3. Models
+### Demographics
 
-- Logistic Regression
-- Decision Tree
-- Random Forest
+* Age
+* Gender
+* MaritalStatus
+* Education
+* EducationField
 
-### 4. Evaluation metrics
+### Compensation
 
-- Accuracy
-- Precision
-- Recall
-- F1 Score
+* MonthlyIncome
+* DailyRate
+* HourlyRate
+* PercentSalaryHike
+* StockOptionLevel
 
-### 5. Explainability
+### Job and Work Environment
 
-Top attrition drivers are extracted using:
+* Department
+* JobRole
+* JobLevel
+* BusinessTravel
+* OverTime
+* WorkLifeBalance
+* EnvironmentSatisfaction
+* JobSatisfaction
 
-- logistic regression coefficients
-- random forest feature importance
-- permutation importance
+### Experience and Tenure
 
-## Repository structure
+* TotalWorkingYears
+* YearsAtCompany
+* YearsInCurrentRole
+* YearsWithCurrManager
+* YearsSinceLastPromotion
+* NumCompaniesWorked
 
-```text
+### Engagement and Performance
+
+* JobInvolvement
+* RelationshipSatisfaction
+* PerformanceRating
+
+---
+
+# Project Workflow
+
+## 1 Data Preprocessing
+
+The preprocessing pipeline includes:
+
+* removing duplicate records
+* dropping identifier and constant columns
+* handling missing values using SimpleImputer
+* encoding categorical variables using OneHotEncoder
+* scaling numerical features using StandardScaler
+
+---
+
+## 2 Exploratory Data Analysis (EDA)
+
+Several visual analyses were created to understand workforce patterns.
+
+Examples include:
+
+* attrition distribution
+* numerical feature histograms
+* attrition vs overtime
+* attrition vs job satisfaction
+* attrition vs business travel
+* correlation heatmap of numerical features
+
+These visualizations provide insight into workforce behavior and potential attrition risks.
+
+---
+
+# Feature Engineering
+
+Several new features were created to capture complex workforce dynamics.
+
+PromotionDelay
+YearsAtCompany − YearsSinceLastPromotion
+Measures how long employees have been waiting for promotion.
+
+WorkloadScore
+JobInvolvement × OverTime
+Detects potential employee burnout.
+
+IncomeExperienceRatio
+MonthlyIncome ÷ (TotalWorkingYears + 1)
+Helps identify potentially underpaid employees.
+
+WorkStability
+YearsAtCompany ÷ (TotalWorkingYears + 1)
+Represents employee job stability.
+
+SatisfactionScore
+JobSatisfaction + EnvironmentSatisfaction + RelationshipSatisfaction
+Represents overall employee satisfaction.
+
+These engineered features significantly improve model interpretability and predictive performance.
+
+---
+
+# Machine Learning Models
+
+The following models were trained and evaluated.
+
+Logistic Regression
+Decision Tree
+Random Forest
+
+Models were trained using a pipeline combining preprocessing and classification.
+
+---
+
+# Model Evaluation
+
+Models were evaluated using:
+
+* Accuracy
+* Precision
+* Recall
+* F1 Score
+* Confusion Matrix
+
+Example model comparison:
+
+| Model               | Accuracy | Precision | Recall | F1 Score |
+| ------------------- | -------- | --------- | ------ | -------- |
+| Logistic Regression | 0.7517   | 0.3488    | 0.6383 | 0.4511   |
+| Random Forest       | 0.8469   | 0.5312    | 0.3617 | 0.4304   |
+| Decision Tree       | 0.7279   | 0.3103    | 0.5745 | 0.4030   |
+
+Best model by F1 score: Logistic Regression
+
+---
+
+# Explainability and Feature Importance
+
+To understand the drivers of employee attrition, several explainability methods were used.
+
+Logistic Regression coefficients
+Random Forest feature importance
+Permutation importance
+
+Key drivers identified include:
+
+* overtime
+* monthly income
+* job satisfaction
+* stock option level
+* business travel
+* distance from home
+* job level
+* total working years
+* marital status
+
+These insights help HR departments focus on targeted retention strategies.
+
+---
+
+# Interactive Prediction Tool
+
+The notebook includes an interactive prediction interface built with ipywidgets.
+
+Users can input employee attributes such as:
+
+* age
+* monthly income
+* job satisfaction
+* overtime
+* years at company
+
+The system then predicts whether the employee is likely to leave.
+
+This tool enables HR teams to perform simple **what-if analysis**.
+
+---
+
+# Generated Outputs
+
+The pipeline generates several outputs including:
+
+model comparison metrics
+dataset summary reports
+missing value analysis
+classification reports
+confusion matrices
+EDA visualizations
+feature importance plots
+business summary insights
+
+The outputs folder may include files such as:
+
+* model_comparison.png
+* attrition_distribution.png
+* correlation_heatmap.png
+* overtime_vs_attrition.png
+* job_satisfaction_vs_attrition.png
+* random_forest_permutation_importance.png
+
+---
+
+# Repository Structure
+
 .
 ├── employee_attrition_prediction.py
 ├── employee_attrition_colab.ipynb
 ├── requirements.txt
 ├── outputs/
 └── README.md
-```
 
-## Results snapshot
+---
 
-Dataset used in the current run:
+# Tools and Libraries
 
-- Rows: `1470`
-- Columns after cleaning: `31`
-- Attrition rate: `16.12%`
+Python
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+ipywidgets
 
-### Model comparison
 
-| Model | Accuracy | Precision | Recall | F1 Score |
-|------|---------:|----------:|-------:|---------:|
-| Logistic Regression | 0.7517 | 0.3488 | 0.6383 | 0.4511 |
-| Random Forest | 0.8469 | 0.5312 | 0.3617 | 0.4304 |
-| Decision Tree | 0.7279 | 0.3103 | 0.5745 | 0.4030 |
-
-Best model in this run by F1 score: `Logistic Regression`
-
-## Key attrition drivers
-
-The strongest factors observed in this run included:
-
-- overtime
-- monthly income
-- stock option level
-- distance from home
-- job satisfaction
-- marital status
-- total working years
-- job level
-- business travel
-
-These insights help HR teams focus on retention strategies such as workload balancing, compensation review, role design, and employee experience improvements.
-
-## Visual outputs
-
-The `outputs/` folder contains generated charts and reports such as:
-
-- `model_comparison.png`
-- `attrition_distribution.png`
-- `correlation_heatmap.png`
-- `overtime_vs_attrition.png`
-- `job_satisfaction_vs_attrition.png`
-- `random_forest_permutation_importance.png`
-
-## Run locally
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd <your-repo-folder>
-```
-
-### 2. Create and activate a virtual environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Download the dataset
-
-Download the Kaggle CSV and place it in the project root with this exact name:
-
-```text
-WA_Fn-UseC_-HR-Employee-Attrition.csv
-```
-
-### 5. Run the pipeline
-
-```bash
-python employee_attrition_prediction.py
-```
-
-If your file is stored elsewhere:
-
-```bash
-python employee_attrition_prediction.py --data /path/to/WA_Fn-UseC_-HR-Employee-Attrition.csv
-```
-
-## Run in Google Colab
-
-If you prefer not to run locally:
-
-1. Open [Google Colab](https://colab.research.google.com/)
-2. Upload `employee_attrition_colab.ipynb`
-3. Run the notebook cells in order
-4. Upload the Kaggle CSV when prompted
-
-## Generated outputs
-
-After execution, the pipeline saves:
-
-- `model_comparison_metrics.csv`
-- `dataset_summary.csv`
-- `missing_values_report.csv`
-- classification reports for each model
-- confusion matrices
-- EDA visualizations
-- feature importance plots
-- `business_summary.txt`
-
-## Tools and libraries
-
-- Python
-- pandas
-- numpy
-- scikit-learn
-- matplotlib
-- seaborn
